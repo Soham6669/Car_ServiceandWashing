@@ -1,0 +1,223 @@
+/* --- Global Reset & Body --- */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    /* This makes the scroll container tall enough */
+    min-height: 400vh;
+    overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
+
+/* --- Fixed Animation Wrapper (The Scene) --- */
+#animation-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    /* Ensure the scene is below the scrollable content */
+    z-index: 10; 
+    transition: opacity 0.5s;
+    /* Styling for the road and sky */
+    background-color: #87CEEB; /* Sky Blue */
+}
+
+/* --- Sun Styling (NEW) --- */
+#sun {
+    position: absolute;
+    top: 10vh; /* High in the sky */
+    right: -100px; /* Start off-screen to the right */
+    width: 80px;
+    height: 80px;
+    background-color: #FFD700; /* Gold/Yellow */
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    z-index: 12; /* Above the sky, below the scroll content */
+    will-change: transform;
+}
+
+
+/* --- Road Scenery --- */
+#road-scenery {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20vh;
+    background-color: #333; /* Dark road color */
+}
+
+/* Road Line (Dotted) */
+#road-scenery::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(to right, 
+        white, 
+        white 10px, 
+        transparent 10px, 
+        transparent 20px);
+}
+
+/* --- Emoji Car Styling (CSS for all car elements) --- */
+.car-image {
+    position: absolute;
+    /* Set the initial position far right, off-screen for the animation start */
+    right: -500px; 
+    left: auto;
+    transform: translateX(0);
+    will-change: transform;
+    z-index: 20;
+
+    /* Styling to make the emoji the content */
+    display: flex;
+    align-items: flex-end; /* Align emoji to the bottom of its container */
+    justify-content: center;
+    line-height: 1;
+
+    /* --- EMOTIONAL FIXES FOR APPEARANCE --- */
+    /* Lifts the emoji slightly off the bottom of the road */
+    padding-bottom: 5px; 
+    /* Adds a subtle shadow to make the emoji pop */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); 
+}
+
+/* Define Car 1 (Furthest lane, smallest) */
+#car1 {
+    bottom: 12vh; /* Lane 1: Furthest from viewer */
+    width: 150px;
+    height: 75px;
+    z-index: 15;
+    /* Use font-size to control emoji size */
+    font-size: 5rem; 
+}
+
+/* Define Car 2 (Middle lane, middle size) */
+#car2 {
+    bottom: 14vh; /* Lane 2: Middle distance */
+    width: 200px;
+    height: 100px;
+    z-index: 20;
+    /* Use font-size to control emoji size */
+    font-size: 7rem;
+}
+
+/* Define Car 3 (Closest lane, largest) */
+#car3 {
+    bottom: 18vh; /* Lane 3: Closest to viewer */
+    width: 250px;
+    height: 125px;
+    z-index: 25;
+    /* Use font-size to control emoji size */
+    font-size: 9rem;
+}
+
+/* --- Added styles for new cars (4, 5, 6) for a realistic, multi-lane look --- */
+
+/* Define Car 4 (Slightly further lane, medium-small size) */
+#car4 {
+    bottom: 08vh; /* Adjusted from 12vh - Slightly above car 1 */
+    width: 175px;
+    height: 85px;
+    z-index: 17;
+    font-size: 6rem;
+}
+
+/* Define Car 5 (Slightly middle lane, medium-large size) */
+#car5 {
+    bottom: 04vh; /* Adjusted from 16vh - Slightly above car 2 */
+    width: 225px;
+    height: 115px;
+    z-index: 22;
+    font-size: 8rem;
+}
+
+/* Define Car 6 (Closest lane, largest size) */
+#car6 {
+    bottom: 0vh; /* Adjusted from 20vh - Just below the road edge, very close */
+    width: 320px; /* Slightly larger */
+    height: 160px;
+    z-index: 27;
+    font-size: 10.5rem; /* Slightly larger */
+}
+
+
+/* --- Scroll Sections (The Invisible Scroll Bar) --- */
+#scroll-sections {
+    /* Needs to be taller than the body height to provide scrollable space */
+    height: 400vh; 
+    position: relative;
+    /* Must be above the fixed animation wrapper to ensure content is interactive */
+    z-index: 50; 
+    pointer-events: none; /* Allows clicks to pass through to the final page */
+}
+
+.scroll-stop {
+    /* Each stop section takes up viewport height to create a distinct scroll zone */
+    height: 100vh; 
+    position: relative;
+}
+
+/* --- Stop Content --- */
+.stop-content-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1000; /* Increased z-index to ensure visibility */
+    pointer-events: none; /* Crucial: ensures the fixed content doesn't block scrolling/clicks */
+}
+
+.stop-content {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.stop-content h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.stop-content p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* --- Final Page Content --- */
+#final-page-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 1000;
+    pointer-events: none; /* Initially disabled */
+}
+
+#final-page-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+#final-page-content p {
+    font-size: 1.5rem;
+}
